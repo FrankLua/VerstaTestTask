@@ -1,0 +1,35 @@
+html,body
+{
+    height: 100%;
+    background-image: url("../root/images/6429581119.jpg");
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-position: center;   
+    background-repeat: no-repeat;
+}
+.wrapper{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.main{
+    flex:1 1 auto;
+}
+
+footer h4{
+    color:gray;    
+    font-size: 26px;
+    border-bottom: 1px solid #666;
+    padding-bottom: 3px;
+}
+footer a{
+    text-decoration: none;
+    transition: all 0.3s;
+}
+footer a:hover{
+    color:white;
+    text-decoration: underline;    
+}
+.modal-content{
+    color:white
+}

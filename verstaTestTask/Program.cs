@@ -12,7 +12,16 @@ services.AddControllersWithViews();
 InitialDb.StatrtDb(builder);
 ScopeBuilder.InitializerService(services);
 ScopeBuilder.InitializerRepsitories(services);
-
+services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH") //not really necessary when AllowAnyMethods is used.
+        );
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,10 +37,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Order}/{action=Index}");
 
 app.Run();

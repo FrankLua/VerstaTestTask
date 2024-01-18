@@ -9,10 +9,13 @@ namespace Application.Services.Interfaces
 {
     public interface IOrderService
     {
-        Task<List<Order>> GetAll();
+        Task<int> GetCountPages();
+        Task<List<Order>> GetByPagination(int pageNumber);
 
         Task<Order> GetOne(int idOrder);
 
         Task<int> SetOne(Order newOrder);
+
+        Task<int> DeleteOne(int idOrder);
     }
 }

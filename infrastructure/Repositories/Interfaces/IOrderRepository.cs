@@ -9,6 +9,8 @@ namespace Infrastructure.Repositories.Interfaces
 {
     public interface IOrderRepository:IBaseCRUD<Order>
     {
-        Task<List<Order>> GetAll();
+        Task<List<Order>> GetOrdersOnPage(int pageNumber,int maxEntity);
+
+        Task<int> GetCountRows();
     }
 }

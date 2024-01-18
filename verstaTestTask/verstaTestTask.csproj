@@ -7,14 +7,6 @@
     <UserSecretsId>5db6413d-2c6e-4005-bb4c-d9cc3db63dbb</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
-	
-  <ItemGroup>
-    <Content Remove="Views\Order\Index.cshtml" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Order\Index.cshtml" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">

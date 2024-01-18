@@ -1,6 +1,7 @@
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Models;
+using verstaTestTask.ViewsModel.View;
 
 namespace verstaTestTask.Controllers
 {
@@ -15,14 +16,30 @@ namespace verstaTestTask.Controllers
             _orderService = orderService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery]int pageNumber)
         {
-            return View();
+            var model = new OrderIndexModel
+            {
+                NumberActualPage = pageNumber,
+                CountPages = await _orderService.GetCountPages(),
+                Orders = await _orderService.GetByPagination(pageNumber)
+            };
+            return View(model);
         }
 
-        public IActionResult Privacy()
+
+
+        [HttpPost]
+        public async Task<IActionResult> SetOrder(Order newOrder)
+        {            
+            await _orderService.SetOne(newOrder);
+            return Redirect("~/Order/Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteOrder( int id)
         {
-            return View();
+            await _orderService.DeleteOne(id);
+            return Redirect("~/Order/Index");
         }
 
 

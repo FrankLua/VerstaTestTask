@@ -3,15 +3,16 @@ using System;
 using Infrastructure.EntityFrameWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20240117043154_initial")]
+    [Migration("20240118150318_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -61,19 +62,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DistrictId = 1,
-                            Name = "Москва",
-                            Prefix = "Moskva",
-                            RegionId = 2,
-                            TimeZone = "+4:00",
-                            TimeZone2 = "+5:00",
-                            Tz = "Europe/Moscow"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Order", b =>
@@ -84,22 +72,24 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AddressRecipient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressSender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RecipientCityId")
-                        .HasColumnType("int");
+                    b.Property<string>("RecipientAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SenderCityId")
-                        .HasColumnType("int");
+                    b.Property<string>("RecipientCity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderCity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");
@@ -107,18 +97,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AddressRecipient = "Ул Братьев Сизых 11",
-                            AddressSender = "Ул Калашникова д3",
-                            Data = new DateTime(2024, 1, 17, 11, 31, 54, 701, DateTimeKind.Local).AddTicks(5420),
-                            RecipientCityId = 1,
-                            SenderCityId = 2,
-                            Weight = 24.600000000000001
-                        });
                 });
 #pragma warning restore 612, 618
         }

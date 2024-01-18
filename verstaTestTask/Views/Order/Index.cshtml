@@ -1,8 +1,62 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using verstaTestTask.ViewsModel.View
+@model OrderIndexModel
+@{
+    ViewData["Title"] = "Order Page";   
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+
+    @if(Model.CountPages == 0)
+    {
+    <div id="countPages" dataNumberActualPage="@Model.NumberActualPage" dataCountPage="@Model.CountPages" class="container">
+            <div class="col-12 bg-dark border-2 mt-xxl-5 text-center" style="height: 150px;">
+                <h2 style="color: white;" class="mb-5">Заказов пока нет</h2>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createOrder">Создать заказ</button>
+            </div>
+        </div>
+    }
+    else{
+    <div id="countPages" dataNumberActualPage="@Model.NumberActualPage"  dataCountPage="@Model.CountPages" class="container">
+            <div class="col-12 bg-dark border-2 mt-xxl-5">
+                <div class="col-12">
+                    <table class="table table-striped" data-bs-theme="dark">
+                        <thead>
+                            <tr>                                
+                                <th scope="col">Номер заказа</th>
+                                <th scope="col">Дата создания</th>
+                                <th scope="col">Узнать больше</th>
+                                <th scope="col">Удалить заказ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model.Orders)
+                            {
+                            <tr dataDateOrder="@item.Date" dataWeight ="@item.Weight" dataAddressSender="@item.SenderAddress" dataRecipientAddress="@item.RecipientAddress" dataSenderCity="@item.SenderCity" dataRecipientCity="@item.RecipientCity">
+                                <td>@item.Id</td>
+                                <td>@item.Date.Day/@item.Date.Month/@item.Date.Year</td>
+                                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#observeModel" name="viewButton">Посмотреть</button></td>
+                                <td><form action="/Order/DeleteOrder" method="post"><input style="display:none" value="@item.Id" name="id" /> <button class="btn btn-danger">Удалить</button></form></td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 text-center pt-2 d-flex m-auto justify-content-between p-3">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createOrder">Создать заказ</button>
+                    <div >
+                        <nav aria-label="Page navigation example" data-bs-theme="dark">
+                            <ul class="pagination justify-content-center pb-2" id="paginationBar">                                
+                               
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+@await Html.PartialAsync("CreateNewOrder")
+@await Html.PartialAsync("ViewOrder")
+<script src="/js/Order/ModalBS.js"></script>
+<script src="/js/Order/Pagination.js"></script>
+<script src="/js/Order/Validate.js"></script>

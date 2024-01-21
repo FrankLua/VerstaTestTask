@@ -1,0 +1,22 @@
+version: "3.9"
+services:  
+  app: 
+    restart: always
+    container_name: versta24
+    image: "chydick/verstatesttask:latest"
+    ports:
+      - "7000:8080"
+    depends_on:
+      - db
+  db:
+    image: "mcr.microsoft.com/mssql/server:2017-latest-ubuntu"
+    container_name: sql_server2022
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "<YourStrong@Passw0rd>"
+      MSSQL_PID: Express
+    volumes:
+      - /mssql/data:/var/lib/mssqlql/data 
+    ports:
+      - "1433:1433"
+    restart: always

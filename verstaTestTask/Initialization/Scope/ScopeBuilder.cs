@@ -16,7 +16,7 @@ namespace StepMaster.Initialization.Scope
         }
         public static void InitializerRepsitories(IServiceCollection service)
         {
-            service.AddScoped<IOrderRepository, OrderRepository>();
+           service.AddScoped<IOrderRepository, OrderRepository>();
        
         }
     }

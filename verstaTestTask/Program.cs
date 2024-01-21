@@ -9,19 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 // Add services to the container.
 services.AddControllersWithViews();
+Console.WriteLine("Hello I am 1.5");
 InitialDb.StatrtDb(builder);
 ScopeBuilder.InitializerService(services);
 ScopeBuilder.InitializerRepsitories(services);
-services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy",
-        builder => builder
-        .AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH") //not really necessary when AllowAnyMethods is used.
-        );
-});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,8 +27,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllerRoute(
